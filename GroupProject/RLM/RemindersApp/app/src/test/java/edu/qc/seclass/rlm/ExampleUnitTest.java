@@ -1,4 +1,4 @@
-package demoapp.demo;
+package edu.qc.seclass.rlm;
 
 import org.junit.Test;
 
