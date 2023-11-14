@@ -1,4 +1,4 @@
-package edu.qc.seclass.rlm;
+package demoapp.demo;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("edu.qc.seclass.rlm", appContext.getPackageName());
+        assertEquals("demoapp.demo", appContext.getPackageName());
     }
 }
