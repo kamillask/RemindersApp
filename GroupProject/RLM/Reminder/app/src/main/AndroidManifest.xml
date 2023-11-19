@@ -13,16 +13,19 @@
         android:theme="@style/Theme.ReminderManager"
         tools:targetApi="31">
         <activity
-            android:name=".AddActivity"
-            android:label="Add List"
-            android:parentActivityName=".MainActivity"
+            android:name=".ReminderListActivity"
             android:exported="false" />
+        <activity
+            android:name=".AddActivity"
+            android:label="Add_Reminder"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Reminder Lists">
+            android:label="Reminder App">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
