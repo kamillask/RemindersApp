@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //showPopupMenu(view);
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
                 startActivity(intent);
             }
@@ -65,28 +64,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-//    private void showPopupMenu(View view){
-//        PopupMenu popupMenu = new PopupMenu(this, view);
-//        Menu menu = popupMenu.getMenu();
-//        menu.add(Menu.NONE, 1, Menu.NONE, "New List");
-//        menu.add(Menu.NONE, 2, Menu.NONE, "New Reminder");
-//
-//        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case 1:
-//                        startActivity(new Intent(MainActivity.this, AddActivity.class));
-//                        return true;
-//                    case 2:
-//                        startActivity(new Intent(MainActivity.this, AddActivity.class));
-//                        return true;
-//                    default:
-//                        return false;
-//                }
-//            }
-//        });
-//        popupMenu.show();
-//    }
 }

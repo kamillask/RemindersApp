@@ -56,7 +56,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public void onClick(View view) {
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
+                int selectedListId = Integer.parseInt(String.valueOf(list_id.get(position)));
                 Intent intent = new Intent(context, DetailActivity.class);
+                intent.putExtra("LIST_ID", selectedListId);
                 context.startActivity(intent);
             }
         }
