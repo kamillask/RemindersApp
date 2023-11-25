@@ -1,6 +1,7 @@
 package edu.qc.seclass.rlm;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -19,8 +20,9 @@ public class DetailActivity extends AppCompatActivity {
     FloatingActionButton add_reminder;
 
     MyDatabaseHelper myDB;
-    ArrayList<String> reminder_id, reminder_name, reminder_type, reminder_time, reminder_date;
+    ArrayList<String> reminder_id, reminder_number, reminder_name, reminder_type, reminder_time, reminder_date;
     int listId;
+    ReminderCustomAdapter reminderCustomAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,13 +42,18 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         myDB = new MyDatabaseHelper(DetailActivity.this);
-        reminder_id = new ArrayList<>();
+        reminder_number = new ArrayList<>();
         reminder_name = new ArrayList<>();
         reminder_type = new ArrayList<>();
-        reminder_time = new ArrayList<>();
-        reminder_date = new ArrayList<>();
+        //reminder_time = new ArrayList<>();
+        //reminder_date = new ArrayList<>();
 
         storeReminderInArrays();
+
+        reminderCustomAdapter = new ReminderCustomAdapter(DetailActivity.this, reminder_number,
+                reminder_name, reminder_type);
+        recyclerView2.setAdapter(reminderCustomAdapter);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(DetailActivity.this));
     }
 
     void storeReminderInArrays(){
@@ -56,11 +63,11 @@ public class DetailActivity extends AppCompatActivity {
         }
         else{
             while(cursor.moveToNext()){
-                reminder_id.add(cursor.getString(0));
-                reminder_name.add(cursor.getString(1));
-                reminder_type.add(cursor.getString(2));
-                reminder_time.add(cursor.getString(3));
-                reminder_date.add(cursor.getString(4));
+                reminder_number.add(cursor.getString(2));
+                reminder_name.add(cursor.getString(3));
+                reminder_type.add(cursor.getString(4));
+                //reminder_time.add(cursor.getString(5));
+                //reminder_date.add(cursor.getString(6));
             }
         }
     }

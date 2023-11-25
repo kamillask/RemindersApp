@@ -27,6 +27,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String REMINDER_COLUMN_TYPE = "reminder_type";
     private static final String REMINDER_COLUMN_TIME = "time";
     private static final String REMINDER_COLUMN_DATE = "date";
+    private static final String REMINDER_COLUMN_NUMBER = "number";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -57,6 +58,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         String createReminderTableQuery = "CREATE TABLE " + REMINDER_TABLE_NAME +
                 " (" + REMINDER_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 REMINDER_COLUMN_LIST_ID + " INTEGER, " +
+                REMINDER_COLUMN_NUMBER + " INTEGER, " +
                 REMINDER_COLUMN_NAME + " TEXT, " +
                 REMINDER_COLUMN_TYPE + " TEXT, " +
                 REMINDER_COLUMN_TIME + " TEXT, " +
@@ -91,9 +93,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
 
+        String maxIdQuery = "SELECT COALESCE(MAX(" + REMINDER_COLUMN_NUMBER + "), 0) FROM " + REMINDER_TABLE_NAME +
+                " WHERE " + REMINDER_COLUMN_LIST_ID + " = " + listId;
+        Cursor cursor = db.rawQuery(maxIdQuery, null);
+        int maxId = 0;
+        if (cursor.moveToFirst()) {
+            maxId = cursor.getInt(0);
+        }
+        int newNumber = maxId + 1;
+
+        ContentValues cv = new ContentValues();
         cv.put(REMINDER_COLUMN_LIST_ID, listId);
+        cv.put(REMINDER_COLUMN_NUMBER, newNumber);
         cv.put(REMINDER_COLUMN_NAME, name);
         cv.put(REMINDER_COLUMN_TYPE, type);
         cv.put(REMINDER_COLUMN_TIME, time);

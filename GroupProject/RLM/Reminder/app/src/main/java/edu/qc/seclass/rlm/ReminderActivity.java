@@ -24,7 +24,7 @@ import java.util.List;
 public class ReminderActivity extends AppCompatActivity {
 
     private Spinner spinnerRemindertype;
-    private EditText editNewReminderype;
+    private EditText editNewRemindertype;
     private EditText editTextNewReminder;
     private Switch daySwitch;
 
@@ -44,7 +44,7 @@ public class ReminderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reminder);
 
         spinnerRemindertype = findViewById(R.id.spinnerReminderTypes); //
-        editNewReminderype = findViewById(R.id.editTextNewReminderType);
+        editNewRemindertype = findViewById(R.id.editTextNewReminderType);
         editTextNewReminder = findViewById(R.id.editTextNewReminder); //
         daySwitch = findViewById(R.id.daySwitch);
         dayEditText = findViewById(R.id.dayEditText); //
@@ -78,10 +78,18 @@ public class ReminderActivity extends AppCompatActivity {
             }
         });
 
+        final String originalHint = editNewRemindertype.getHint().toString().trim();
         btnAddReminderType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addReminderType(v);
+                if (!editNewRemindertype.getText().toString().trim().isEmpty()) {
+                    addReminderType(v);
+                    editNewRemindertype.getText().clear();
+                    editNewRemindertype.setHint(originalHint);
+                }
+                else{
+                    Toast.makeText(ReminderActivity.this, "Text is empty", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -139,7 +147,7 @@ public class ReminderActivity extends AppCompatActivity {
 
 
     public void addReminderType(View view){
-        String newReminderType = editNewReminderype.getText().toString().trim();
+        String newReminderType = editNewRemindertype.getText().toString().trim();
         if(!TextUtils.isEmpty(newReminderType)){
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerRemindertype.getAdapter();
             adapter.add(newReminderType);
@@ -148,28 +156,6 @@ public class ReminderActivity extends AppCompatActivity {
             //editNewReminderype.setText("Enter new type");
         }
     }
-
-/*
-
-    public void saveReminder(View view){
-        String selectedRT = spinnerRemindertype.getSelectedItem().toString();
-        String newReminder = editTextNewReminder.getText().toString().trim();
-
-        MyDatabaseHelper myDB = new MyDatabaseHelper(this);
-
-        if(!TextUtils.isEmpty(newReminder)) {
-            long result = myDB.addReminder(selectedRT, newReminder);
-
-            if (result != -1) {
-                Toast.makeText(this, "Reminder saved successfully", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Failed to save reminder", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-*/
-
 
 }
 
