@@ -31,6 +31,10 @@ public class ReminderActivity extends AppCompatActivity {
     private EditText dayET;
 
     private EditText dayEditText;
+    Button btnAddReminderType;
+    Button save_button;
+
+    String timeplaceholder = "NULL";
 
     int listId;
 
@@ -39,11 +43,13 @@ public class ReminderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reminder);
 
-        spinnerRemindertype = findViewById(R.id.spinnerReminderTypes);
+        spinnerRemindertype = findViewById(R.id.spinnerReminderTypes); //
         editNewReminderype = findViewById(R.id.editTextNewReminderType);
-        editTextNewReminder = findViewById(R.id.editTextNewReminder);
+        editTextNewReminder = findViewById(R.id.editTextNewReminder); //
         daySwitch = findViewById(R.id.daySwitch);
-        dayEditText = findViewById(R.id.dayEditText);
+        dayEditText = findViewById(R.id.dayEditText); //
+        btnAddReminderType = findViewById(R.id.button);
+        save_button = findViewById(R.id.save);
         Intent intent = getIntent();
         listId = intent.getIntExtra("LIST_ID", -1);
 
@@ -72,7 +78,6 @@ public class ReminderActivity extends AppCompatActivity {
             }
         });
 
-        Button btnAddReminderType = findViewById(R.id.button);
         btnAddReminderType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,12 +86,16 @@ public class ReminderActivity extends AppCompatActivity {
             }
         });
 
-        Button btnAddReminder = findViewById(R.id.save);
-        btnAddReminder.setOnClickListener(new View.OnClickListener(){
+        save_button.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
-                //saveReminder(view);
+                MyDatabaseHelper myDB = new MyDatabaseHelper(ReminderActivity.this);
+                myDB.addReminder(listId, editTextNewReminder.getText().toString().trim(),
+                        spinnerRemindertype.getSelectedItem().toString().trim(), dayEditText.getText().toString().trim(),
+                        timeplaceholder);
+
+                finish();
             }
         });
 
