@@ -3,6 +3,7 @@ package edu.qc.seclass.rlm;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -15,11 +16,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class ReminderActivity extends AppCompatActivity {
 
@@ -28,13 +31,15 @@ public class ReminderActivity extends AppCompatActivity {
     private EditText editTextNewReminder;
     private Switch daySwitch;
 
-    private EditText dayET;
+    private Switch timeSwitch;
+
+    private EditText timeEditText;
 
     private EditText dayEditText;
     Button btnAddReminderType;
     Button save_button;
 
-    String timeplaceholder = "NULL";
+    //String timeplaceholder = "NULL";
 
     int listId;
 
@@ -47,6 +52,8 @@ public class ReminderActivity extends AppCompatActivity {
         editNewRemindertype = findViewById(R.id.editTextNewReminderType);
         editTextNewReminder = findViewById(R.id.editTextNewReminder); //
         daySwitch = findViewById(R.id.daySwitch);
+        timeSwitch = findViewById(R.id.timeSwitch);
+        timeEditText = findViewById(R.id.timeEditText);
         dayEditText = findViewById(R.id.dayEditText); //
         btnAddReminderType = findViewById(R.id.button);
         save_button = findViewById(R.id.save);
@@ -78,6 +85,20 @@ public class ReminderActivity extends AppCompatActivity {
             }
         });
 
+        timeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    openTimePicker();
+                } else {
+                    timeEditText.setText("");
+                }
+            }
+        });
+
+
+
         final String originalHint = editNewRemindertype.getHint().toString().trim();
         btnAddReminderType.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +122,7 @@ public class ReminderActivity extends AppCompatActivity {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(ReminderActivity.this);
                 myDB.addReminder(listId, editTextNewReminder.getText().toString().trim(),
                         spinnerRemindertype.getSelectedItem().toString().trim(), dayEditText.getText().toString().trim(),
-                        timeplaceholder);
+                        timeEditText.getText().toString().trim());
 
                 finish();
             }
@@ -144,6 +165,26 @@ public class ReminderActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
+    private void openTimePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(
+                this,
+                new TimePickerDialog.OnTimeSetListener() {
+                    public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute){
+                        String selectedTime = String.format(Locale.getDefault(),"%02d:%02d", selectedHour, selectedMinute);
+                        timeEditText.setText(selectedTime);
+                    }
+                },
+                hour, minute, false
+        );
+        timePickerDialog.show();
+    }
+
+
+
 
 
     public void addReminderType(View view){
@@ -156,6 +197,8 @@ public class ReminderActivity extends AppCompatActivity {
             //editNewReminderype.setText("Enter new type");
         }
     }
+
+
 
 }
 

@@ -54,11 +54,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="99dp"
         android:ems="10"
-        android:inputType="text"
         android:hint="Add a new reminder"
-        app:layout_constraintEnd_toStartOf="@+id/save"
+        android:inputType="text"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextNewReminderType" />
@@ -67,8 +67,8 @@
         android:id="@+id/save"
         android:layout_width="85dp"
         android:layout_height="43dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="464dp"
+        android:layout_marginEnd="168dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerReminderTypes" />
@@ -79,7 +79,7 @@
         android:layout_height="33dp"
         android:layout_marginTop="272dp"
         android:layout_marginEnd="16dp"
-        android:text="Enable Day Picker"
+        android:text="Enable Day Alert"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerReminderTypes" />
 
@@ -93,6 +93,28 @@
         android:hint="Selected Day"
         android:inputType="none"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerReminderTypes" />
+
+    <EditText
+        android:id="@+id/timeEditText"
+        android:layout_width="188dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="348dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint = "Selected Time"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerReminderTypes" />
+
+    <Switch
+        android:id="@+id/timeSwitch"
+        android:layout_width="139dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="348dp"
+        android:layout_marginEnd="16dp"
+        android:text="Enable Time Alert"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerReminderTypes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
