@@ -1,6 +1,7 @@
 package edu.qc.seclass.rlm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder>{
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
-    private Context context;
-    private ArrayList reminder_type, actual_reminder, reminder_list;
+    Context context;
+    ArrayList list_id, list_name;
 
-    CustomAdapter(Context context,
-                  ArrayList reminder_type,
-                  ArrayList actual_reminder,
-                  ArrayList reminder_list) {
+    CustomAdapter(Context context, ArrayList list_id, ArrayList list_name){
         this.context = context;
-        this.reminder_type = reminder_type;
-        this.actual_reminder = actual_reminder;
-        this.reminder_list= reminder_list;
-
+        this.list_id = list_id;
+        this.list_name = list_name;
     }
-
-
     @NonNull
     @Override
-    public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent, false);
         return new MyViewHolder(view);
@@ -38,25 +32,33 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull CustomAdapter.MyViewHolder holder, int position) {
-        holder.reminder_type_txt.setText(String.valueOf(reminder_type.get(position)));
-        holder.actual_reminder_txt.setText(String.valueOf(actual_reminder.get(position)));
-        holder.reminder_list_txt.setText(String.valueOf(reminder_list.get(position)));
+        holder.list_id_text.setText(String.valueOf(list_id.get(position)));
+        holder.list_name_text.setText(String.valueOf(list_name.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return reminder_type.size();
+        return list_id.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView reminder_type_txt, actual_reminder_txt, reminder_list_txt;
-
+        TextView list_id_text, list_name_text;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            reminder_type_txt = itemView.findViewById(R.id.reminder_type_txt);
-            actual_reminder_txt = itemView.findViewById(R.id.reminder_name_txt);
-            reminder_list_txt = itemView.findViewById(R.id.reminder_num_txt);
+            list_id_text = itemView.findViewById(R.id.list_id_text);
+            list_name_text = itemView.findViewById(R.id.list_name_text);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            if(position != RecyclerView.NO_POSITION){
+                Intent intent = new Intent(context, AddActivity.class);
+                context.startActivity(intent);
+            }
         }
     }
 }
