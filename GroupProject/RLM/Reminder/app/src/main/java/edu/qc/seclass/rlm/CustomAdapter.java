@@ -56,7 +56,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         public void onClick(View view) {
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION){
-                Intent intent = new Intent(context, AddActivity.class);
+                Intent intent = new Intent(context, DetailActivity.class);
                 context.startActivity(intent);
             }
         }
