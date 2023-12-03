@@ -110,32 +110,6 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
             notifyItemRangeChanged(position, getItemCount() - position);
         }
     }
-
-
-    /*
-
-    private void deleteItem(int position) {
-    if (position >= 0 && position < reminder_number.size()) {
-        int listId = // Get the listId associated with this reminder
-
-        MyDatabaseHelper dbHelper = new MyDatabaseHelper(context);
-        dbHelper.deleteReminderById(position, listId);
-
-        reminder_number.remove(position);
-        reminder_name.remove(position);
-        reminder_type.remove(position);
-        notifyItemRemoved(position);
-        notifyItemRangeChanged(position, getItemCount() - position);
-    }
-}
-
-
-}
-
-     */
-
-
-
 }
 
 
