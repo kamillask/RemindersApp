@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
@@ -27,7 +31,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String REMINDER_COLUMN_TYPE = "reminder_type";
     private static final String REMINDER_COLUMN_TIME = "time";
     private static final String REMINDER_COLUMN_DATE = "date";
-    private static final String REMINDER_COLUMN_NUMBER = "number";
+    private static final String REMINDER_COLUMN_NUMBER = "number"; // need to remove
+
+
+    private static final String REMINDER_TYPE_TABLE_NAME = "reminder_type_table";
+    private static final String REMINDER_TYPE_COLUMN_ID = "_id";
+    private static final String REMINDER_TYPE_COLUMN_NAME = "type_name";
 
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,12 +47,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         createListTable(db);
         createReminderTable(db);
+        createReminderTypeTable(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + REMINDER_TYPE_TABLE_NAME);
         onCreate(db);
     }
 
@@ -65,6 +76,42 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 REMINDER_COLUMN_DATE + " TEXT, " +
                 "FOREIGN KEY(" + REMINDER_COLUMN_LIST_ID + ") REFERENCES " + TABLE_NAME + "(" + COLUMN_ID + "));";
         db.execSQL(createReminderTableQuery);
+    }
+
+    private void createReminderTypeTable(SQLiteDatabase db){
+        String createReminderTypeTableQuery = "CREATE TABLE " + REMINDER_TYPE_TABLE_NAME +
+                " (" + REMINDER_TYPE_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                REMINDER_TYPE_COLUMN_NAME + " TEXT);";
+        db.execSQL(createReminderTypeTableQuery);
+
+        insertDefaultReminderTypes(db);
+    }
+
+    private void insertDefaultReminderTypes(SQLiteDatabase db) {
+        List<String> defaultTypes = Arrays.asList("meeting", "appointment");
+
+        ContentValues cv = new ContentValues();
+        for (String type : defaultTypes) {
+            cv.put(REMINDER_TYPE_COLUMN_NAME, type);
+            db.insert(REMINDER_TYPE_TABLE_NAME, null, cv);
+        }
+    }
+
+    public List<String> getReminderTypesFromDB() {
+        List<String> reminderTypes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + REMINDER_TYPE_COLUMN_NAME + " FROM " + REMINDER_TYPE_TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+
+        while (cursor.moveToNext()) {
+            int columnIndex = cursor.getColumnIndex(REMINDER_TYPE_COLUMN_NAME);
+            if (columnIndex != -1) {
+                String type = cursor.getString(columnIndex);
+                reminderTypes.add(type);
+            }
+        }
+        return reminderTypes;
     }
 
     void addList(String list){
@@ -116,6 +163,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Failed to add reminder", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Reminder added successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addReminderType(String reminderType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(REMINDER_TYPE_COLUMN_NAME, reminderType);
+
+        long result = db.insert(REMINDER_TYPE_TABLE_NAME, null, cv);
+
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add reminder type", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Reminder type added successfully", Toast.LENGTH_SHORT).show();
         }
     }
 

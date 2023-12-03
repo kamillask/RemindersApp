@@ -39,8 +39,6 @@ public class ReminderActivity extends AppCompatActivity {
     Button btnAddReminderType;
     Button save_button;
 
-    //String timeplaceholder = "NULL";
-
     int listId;
 
     @Override
@@ -131,18 +129,11 @@ public class ReminderActivity extends AppCompatActivity {
     }
 
     private void storeSpinner(){
-        List<String> reminderType = getReminderTypesFromDB();
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(this);
+        List<String> reminderType = dbHelper.getReminderTypesFromDB();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, reminderType);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRemindertype.setAdapter(adapter);
-
-    }
-
-    private List<String> getReminderTypesFromDB() {
-        List<String> manualList = new ArrayList<>();
-        manualList.add("meeting");
-        manualList.add("appointment");
-        return manualList;
     }
 
     private void openDayPicker() {
@@ -183,18 +174,16 @@ public class ReminderActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-
-
-
-
     public void addReminderType(View view){
         String newReminderType = editNewRemindertype.getText().toString().trim();
         if(!TextUtils.isEmpty(newReminderType)){
+            MyDatabaseHelper dbHelper = new MyDatabaseHelper(this);
+            dbHelper.addReminderType(newReminderType);
+            List<String> reminderType = dbHelper.getReminderTypesFromDB();
             ArrayAdapter<String> adapter = (ArrayAdapter<String>) spinnerRemindertype.getAdapter();
-            adapter.add(newReminderType);
+            adapter.clear();
+            adapter.addAll(reminderType);
             adapter.notifyDataSetChanged();
-
-            //editNewReminderype.setText("Enter new type");
         }
     }
 
