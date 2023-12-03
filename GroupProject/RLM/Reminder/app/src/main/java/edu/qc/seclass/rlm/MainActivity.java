@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         myDB = new MyDatabaseHelper(MainActivity.this);
         list_id = new ArrayList<>();
         list_name = new ArrayList<>();

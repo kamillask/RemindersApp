@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,7 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
 
     Context context;
     ArrayList reminder_number, reminder_name, reminder_type;
+
 
     ReminderCustomAdapter(Context context, ArrayList reminder_number, ArrayList reminder_name,
                           ArrayList reminder_type){
@@ -46,11 +49,14 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView reminder_id_text, reminder_name_text, reminder_type_text;
+        CheckBox checkBox;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             reminder_id_text = itemView.findViewById(R.id.reminder_id_text);
             reminder_name_text = itemView.findViewById(R.id.reminder_name_text);
             reminder_type_text = itemView.findViewById(R.id.reminder_type_text);
+            checkBox = itemView.findViewById(R.id.checkBox);
+
         }
     }
 }

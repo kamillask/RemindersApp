@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ public class DetailActivity extends AppCompatActivity {
     ArrayList<String> reminder_id, reminder_number, reminder_name, reminder_type, reminder_time, reminder_date;
     int listId;
     ReminderCustomAdapter reminderCustomAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,13 @@ public class DetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(DetailActivity.this, ReminderActivity.class);
                 intent.putExtra("LIST_ID", listId);
                 startActivity(intent);
+            }
+        });
+        Button uncheckAllButton = findViewById(R.id.uncheckAllButton);
+        uncheckAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uncheckAllCheckboxes();
             }
         });
 
@@ -68,6 +77,15 @@ public class DetailActivity extends AppCompatActivity {
                 reminder_type.add(cursor.getString(4));
                 //reminder_time.add(cursor.getString(5));
                 //reminder_date.add(cursor.getString(6));
+            }
+        }
+    }
+
+    private void uncheckAllCheckboxes() {
+        for (int i = 0; i < reminderCustomAdapter.getItemCount(); i++) {
+            ReminderCustomAdapter.MyViewHolder viewHolder = (ReminderCustomAdapter.MyViewHolder) recyclerView2.findViewHolderForAdapterPosition(i);
+            if (viewHolder != null) {
+                viewHolder.checkBox.setChecked(false);
             }
         }
     }
