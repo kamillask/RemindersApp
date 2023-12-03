@@ -5,8 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.CheckBox;
+import android.widget.PopupMenu;
+import android.view.MenuItem;
+
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +54,7 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView reminder_id_text, reminder_name_text, reminder_type_text;
+        ImageView optionsMenu;
         CheckBox checkBox;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +62,38 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
             reminder_name_text = itemView.findViewById(R.id.reminder_name_text);
             reminder_type_text = itemView.findViewById(R.id.reminder_type_text);
             checkBox = itemView.findViewById(R.id.checkBox);
+            optionsMenu = itemView.findViewById(R.id.options_menu);
 
+            optionsMenu.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    showPopupMenu(view);
+                }
+            });
         }
     }
+
+    public void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(context, view);
+        popupMenu.getMenu().add("Edit");
+        popupMenu.getMenu().add("Delete");
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                String title = item.getTitle().toString();
+                if ("Edit".equals(title)) {
+                    // Perform edit action
+                    return true;
+                } else if ("Delete".equals(title)) {
+                    // Perform delete action
+                    return true;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
 }
