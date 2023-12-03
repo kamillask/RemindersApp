@@ -1,6 +1,7 @@
 package edu.qc.seclass.rlm;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 import android.widget.CheckBox;
 import android.widget.PopupMenu;
 import android.view.MenuItem;
-
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,11 @@ import java.util.ArrayList;
 public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAdapter.MyViewHolder> {
 
     Context context;
-    ArrayList reminder_number, reminder_name, reminder_type;
+    //ArrayList reminder_number, reminder_name, reminder_type;
+    ArrayList<Long> reminder_number;
+    ArrayList<String> reminder_name;
+    ArrayList<String> reminder_type;
+    MyDatabaseHelper dbHelper;
 
 
     ReminderCustomAdapter(Context context, ArrayList reminder_number, ArrayList reminder_name,
@@ -68,13 +73,13 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
 
                 @Override
                 public void onClick(View view) {
-                    showPopupMenu(view);
+                    showPopupMenu(view,  getAdapterPosition());
                 }
             });
         }
     }
 
-    public void showPopupMenu(View view) {
+    public void showPopupMenu(View view, final int position) {
         PopupMenu popupMenu = new PopupMenu(context, view);
         popupMenu.getMenu().add("Edit");
         popupMenu.getMenu().add("Delete");
@@ -84,10 +89,10 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
             public boolean onMenuItemClick(MenuItem item) {
                 String title = item.getTitle().toString();
                 if ("Edit".equals(title)) {
-                    // Perform edit action
+                    //editItem();
                     return true;
                 } else if ("Delete".equals(title)) {
-                    // Perform delete action
+                    deleteItem(position);
                     return true;
                 }
                 return false;
@@ -96,4 +101,41 @@ public class ReminderCustomAdapter extends RecyclerView.Adapter<ReminderCustomAd
         popupMenu.show();
     }
 
+    private void deleteItem(int position) {
+        if (position >= 0 && position < reminder_number.size()) {
+            reminder_number.remove(position);
+            reminder_name.remove(position);
+            reminder_type.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, getItemCount() - position);
+        }
+    }
+
+
+    /*
+
+    private void deleteItem(int position) {
+    if (position >= 0 && position < reminder_number.size()) {
+        int listId = // Get the listId associated with this reminder
+
+        MyDatabaseHelper dbHelper = new MyDatabaseHelper(context);
+        dbHelper.deleteReminderById(position, listId);
+
+        reminder_number.remove(position);
+        reminder_name.remove(position);
+        reminder_type.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, getItemCount() - position);
+    }
 }
+
+
+}
+
+     */
+
+
+
+}
+
+
