@@ -213,6 +213,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteList(long listId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_ID + "=?", new String[]{String.valueOf(listId)});
+        db.delete(REMINDER_TABLE_NAME, REMINDER_COLUMN_LIST_ID + "=?", new String[]{String.valueOf(listId)});
+        db.close();
+    }
+
 
 
 /*

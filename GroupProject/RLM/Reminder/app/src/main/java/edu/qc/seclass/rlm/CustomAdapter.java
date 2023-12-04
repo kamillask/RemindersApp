@@ -17,6 +17,8 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
 
+    MyDatabaseHelper myDB;
+
     Context context;
     ArrayList list_id, list_name;
 
@@ -24,6 +26,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.context = context;
         this.list_id = list_id;
         this.list_name = list_name;
+        myDB = new MyDatabaseHelper(context);
     }
     @NonNull
     @Override
@@ -101,6 +104,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         private void deleteItem(int position) {
             if (position >= 0 && position < list_id.size()) {
+                long id = Long.parseLong(list_id.get(position).toString());
+                myDB.deleteList(id);
+
                 list_id.remove(position);
                 list_name.remove(position);
                 notifyItemRemoved(position);
