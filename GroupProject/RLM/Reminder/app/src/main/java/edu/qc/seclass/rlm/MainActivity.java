@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         myDB = new MyDatabaseHelper(MainActivity.this);
         list_id = new ArrayList<>();
         list_name = new ArrayList<>();
@@ -50,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
         customadapter = new CustomAdapter(MainActivity.this, list_id, list_name);
         recyclerView.setAdapter(customadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        list_id.clear();
+        list_name.clear();
+
+        storeDataInArrays();
+
+        customadapter.notifyDataSetChanged();
     }
 
     void storeDataInArrays(){

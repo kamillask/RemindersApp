@@ -1,22 +1,17 @@
 # Test Plan
 **Author**: Group 5
 
+#### Version 2: Added more test cases with expected and actual results. Test cases are indicated with a pass/fail comment. Some parts of documents are edited since we were only able to use manual testing.
+
 ## 1 Testing Strategy
 
 ### 1.1 Overall strategy
 
-Our testing strategy for the Reminder App will encompass multiple levels of testing to ensure that each component functions correctly both in isolation and in conjunction with other components. The testing levels will include:
+Our testing strategy for the Reminder App will be focused on manual testing, covering different aspects of the application's functionality. The testing levels will include:
 
-- Unit Testing: Individual components will be tested to ensure that they perform as expected. This will include testing classes, methods, and functions for the core functionality such as list creation, reminder instantiation, alert setup, and system acknowledgment.
+**Manual Testing:** Testers will manually interact with the application's user interface and features to ensure correct behavior.
 
-- Integration Testing: After unit testing, we will perform integration tests to verify that the components work together. This will involve testing the interactions between the 'New Reminder List' creation feature, 'Individual Reminder' creation feature, 'Alert Repeat' function, and the acknowledgment signals.
-
-- System Testing: The entire application will be subjected to system testing to ensure that it meets the requirements specified in the sequence behavioral description. This will test the end-to-end functionality of the app, including user interaction flows and system responses.
-
-- Regression Testing: Whenever a new feature is added or an existing feature is modified, regression tests will be performed to ensure that the change has not adversely affected the existing functionality.
-
-The testing will be carried out iteratively, with each release cycle going through the unit, integration, system, and regression tests as needed. The testing team will include software testers for manual testing and software developers for automated test script creation.
-
+The testing will be carried out iteratively, with each release cycle going through manual testing to validate the functionality.
 
 ### 1.2 Test Selection
 
@@ -58,10 +53,20 @@ We did not use any external programs to conduct out testing. Testing was done ma
 
 
 
-|Test Case ID|Purpose   |Steps   |Expected Result   |Actual Result   |Pass/Fail   |Comments   |
-|---|---|---|---|---|---|---|
-|TC01   |Check reminder creation   |1.Navigate to reminders. <br />2. Create a new reminder   |New reminder is added to the list   |   |   |   |
-|TC02   |Test Reminder Notification   |1.Create a reminder with an alert. <br />2. Wait for the alert time|Notification is received at the correct time   |   |   |Test with phone locked and unlocked.   |
-|TC03   |Verify Data Sync Across Devices   |1.Create a reminder on Device A.<br />2. Login on Device B. <br />3. Check for reminder on Device B.|Same reminder appears on Device B|   |   |Must be logged in with the same user account|
-|TC04   |Assess GPS Reminder Trigger|1.Set a location-based reminder. <br />2. Approach the location. <br />3. Verify reminder alert|Reminder alert is triggered when the location is reached.|   |   |GPS accuracy may affect the result.|
-
+| Test Case ID | Purpose                                    | Steps                                                                                                  | Expected Result                        | Actual Result                                                       | Pass/Fail | Comments                          |
+|--------------|--------------------------------------------|--------------------------------------------------------------------------------------------------------|----------------------------------------|---------------------------------------------------------------------|-----------|-----------------------------------|
+| TC01         | Add ReminderList                           | 1. Click on the add button on the first screen. <br />2. Add a new list name                                | A new reminder list is created         | Is added                                                            | Pass      | May have to refresh the screen    |
+| TC02         | Add reminder type                          | 1. Click on the add button Check if the new type is stored in the spinner. <br />2. Select the type                | A new reminder type is added           | Is added                                                            | Pass      | Works as expected                 |
+| TC03         | Add a new Reminder                         | 1. Type the new reminder inside the edit text. <br />2. Click save button                                          | A new reminder name is added           | Is added                                                            | Pass      | Works as expected                 |
+| TC04         | Add a new date                             | 1. Select a new date from the date picker <br />2. Click save button                                               | A new date is added                    | Is added                                                            | Pass      | Works as expected                 |
+| TC05         | Add a new time                             | 1. Select a new time from the time picker <br />2. Click the save button.                                          | A new time is added                    | Is added                                                            | Pass      | Works as expected                 |
+| TC06         | Display reminder list                      | 1. Click on the plus icon. <br />2. Type the name of the list Go back to the main screen                           | Reminder List added to the main screen | Is added                                                            | Pass      | Works as expected                 |
+| TC07         | Deleting reminder list                     | 1. On the main screen, where the reminder list is displayed, click on the three dots. <br />2. Click delete.       | Is deleted                             | Is deleted                                                          | Pass      | Only deletes from screen          |
+| TC08         | Deleting reminder list (Database)          | 1. On the main screen, where the reminder list is displayed, click on the three dots. <br />2. Click delete. | Is deleted                             | Is deleted                                                         | Pass      | Deletes from the database |
+| TC09         | Deleting reminder name and type            | 1. The reminder name and type are displayed.  <br />2. Click on the three dots and delete.                         | Is deleted                             | Is deleted                                                          | Pass      | Only deletes from screen          |
+| TC10         | Deleting reminder name and type (Database) | 1. The reminder name and type are displayed. <br />2. Click on the three dots and delete.                          | Is deleted                             | Not deleted                                                         | Fail      | Does not delete from the database |
+| TC11         | CheckOff reminder                          | 1. On the list of reminders name screen, click on the checkbox. <br />2. Check or uncheck                          | Uncheck the reminder                   | Unchecked                                                           | Pass      | Works as expected                 |
+| TC12         | Adding reminderType to spinner             | 1. On adding reminders screen, type a new reminder type. <br />2. Click ‘add’ button.                              | Is added                               | Is added                                                            | Pass      | Added inside the database         |
+| TC13         | Uncheck all reminders                      | 1. Check all the reminders first. <br />2. Click the Uncheck All button.                                  | Uncheck all reminders                  | Unchecked                                                           | Pass      | Works as expected                 |
+| TC14         | Edit reminderList                          | 1. Click the button on the right side of the list, then click edit                                      | Add or rename the list                 | After delete the reminder, then restart the app, it come back again | Fail      | Not implemented                   |
+| TC15         | Edit reminder name and type                | 1. Click the button on the right side of the reminder, then click edit                                  | Edit the name and type                 | After click edit, there is no response.                             | Fail      | Not implemented                   |
