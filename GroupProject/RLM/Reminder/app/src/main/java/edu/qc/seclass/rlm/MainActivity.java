@@ -52,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(customadapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        list_id.clear();
+        list_name.clear();
+
+        storeDataInArrays();
+
+        customadapter.notifyDataSetChanged();
+    }
 
     void storeDataInArrays(){
         Cursor cursor = myDB.readAllData();

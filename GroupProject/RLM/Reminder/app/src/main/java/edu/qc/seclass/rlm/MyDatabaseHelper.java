@@ -91,8 +91,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private void insertDefaultReminderTypes(SQLiteDatabase db) {
         List<String> defaultTypes = Arrays.asList("meeting", "appointment");
 
-        ContentValues cv = new ContentValues();
         for (String type : defaultTypes) {
+            ContentValues cv = new ContentValues();
             cv.put(REMINDER_TYPE_COLUMN_NAME, type);
             db.insert(REMINDER_TYPE_TABLE_NAME, null, cv);
         }

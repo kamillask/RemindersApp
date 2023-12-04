@@ -21,6 +21,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     Context context;
     ArrayList list_id, list_name;
+    ArrayList<Long> reminder_id;
 
     CustomAdapter(Context context, ArrayList list_id, ArrayList list_name){
         this.context = context;
@@ -98,6 +99,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                     }
                     return false;
                 }
+
             });
             popupMenu.show();
         }

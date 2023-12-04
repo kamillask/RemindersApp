@@ -42,6 +42,7 @@ public class DetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         Button uncheckAllButton = findViewById(R.id.uncheckAllButton);
         uncheckAllButton.setOnClickListener(new View.OnClickListener() {
             @Override
