@@ -47,17 +47,11 @@ Then we will proceed to define specific test cases based on the features and beh
 
 ### 1.4 Bug Tracking
 
-We will use the [Bug Tracking System] tool for bug and enhancement tracking. All bugs and issues discovered during testing will be recorded and tracked through this system until solved.
+Bug tracking was recorded in our UserManual.md. Whenever we ran into something that did not work, we would add it to that document, and address it.
 
 ### 1.5 Technology
 
-**JUnit:** The testing framework for writing and running repeatable tests in Java, used for unit-level testing.
-
-**AndroidJUniRunner:** The default test runner on Android which supports both JUnit4 and JUnit3 tests.
-
-**Android Profiler:** Integrated into Android Studio, it provides real-time statistics for CPU usage to see the performance.
-
-**Crashlytics:** Real-time reporting is critical for monitoring the app stability.
+We did not use any external programs to conduct out testing. Testing was done manually by creating test cases, and seeing if the program worked with them or not.
 
 
 ## 2 Test Cases
